@@ -1,6 +1,6 @@
-***********************
-EAGERx Template Package
-***********************
+**********************
+eagerx_reality package
+**********************
 
 .. image:: https://img.shields.io/badge/License-Apache_2.0-blue.svg
    :target: https://opensource.org/licenses/Apache-2.0
@@ -26,7 +26,7 @@ EAGERx Template Package
     :depth: 2
 
 What is the *eagerx_reality* package?
-=================
+=====================================
 This repository/package contains the *RealBridge*, which allows to perform experiments with real systems in EAGERx.
 EAGERx (Engine Agnostic Gym Environments for Robotics) enables users to easily define new tasks, switch from one sensor to another, and switch from simulation to reality with a single line of code by being invariant to the physics engine.
 `The core repository is available here <https://github.com/eager-dev/eagerx>`_.
