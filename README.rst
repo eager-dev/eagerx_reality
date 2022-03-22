@@ -14,14 +14,6 @@ eagerx_reality package
   :target: https://github.com/eager-dev/eagerx_reality/actions/workflows/ci.yml
   :alt: Continuous Integration
 
-.. image:: https://api.codeclimate.com/v1/badges/3146dce3dd4c3537834c/maintainability
-  :target: https://codeclimate.com/github/eager-dev/eagerx_reality/maintainability
-  :alt: Maintainability
-
-.. image:: https://api.codeclimate.com/v1/badges/3146dce3dd4c3537834c/test_coverage
-  :target: https://codeclimate.com/github/eager-dev/eagerx_reality/test_coverage
-  :alt: Test Coverage
-
 .. contents:: Table of Contents
     :depth: 2
 
