@@ -24,6 +24,19 @@ EAGERx (Engine Agnostic Gym Environments for Robotics) enables users to easily d
 `The core repository is available here <https://github.com/eager-dev/eagerx>`_.
 `Full documentation and tutorials (including package creation and contributing) are available here <https://eagerx.readthedocs.io/en/master/>`_.
 
+Installation
+============
+
+You can install the package using pip:
+
+.. code:: shell
+
+    pip3 install eagerx-reality
+
+.. note::
+    EAGERx depends on a minimal ROS installation. Fortunately, you **can** use eagerx anywhere as you would any python package,
+    so it does **not** impose a ROS package structure on your project.
+
 Cite EAGERx
 ===============
 If you are using EAGERx for your scientific publications, please cite:
