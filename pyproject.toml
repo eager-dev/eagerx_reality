@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "eagerx_reality"
-version = "0.1.3"
+version = "0.1.4"
 license = "Apache2.0"
 description = "Simple bridge that can be used in reality together with several useful nodes."
 authors = ["Jelle Luijkx <j.d.luijkx@tudelft.nl>", "Bas van der Heijden <d.s.vanderheijden@tudelft.nl>"]
