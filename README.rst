@@ -14,14 +14,6 @@ eagerx_reality package
   :target: https://github.com/eager-dev/eagerx_reality/actions/workflows/ci.yml
   :alt: Continuous Integration
 
-.. image:: https://api.codeclimate.com/v1/badges/3146dce3dd4c3537834c/maintainability
-  :target: https://codeclimate.com/github/eager-dev/eagerx_reality/maintainability
-  :alt: Maintainability
-
-.. image:: https://api.codeclimate.com/v1/badges/3146dce3dd4c3537834c/test_coverage
-  :target: https://codeclimate.com/github/eager-dev/eagerx_reality/test_coverage
-  :alt: Test Coverage
-
 .. contents:: Table of Contents
     :depth: 2
 
@@ -29,8 +21,23 @@ What is the *eagerx_reality* package?
 =====================================
 This repository/package contains the *RealBridge*, which allows to perform experiments with real systems in EAGERx.
 EAGERx (Engine Agnostic Gym Environments for Robotics) enables users to easily define new tasks, switch from one sensor to another, and switch from simulation to reality with a single line of code by being invariant to the physics engine.
+
 `The core repository is available here <https://github.com/eager-dev/eagerx>`_.
+
 `Full documentation and tutorials (including package creation and contributing) are available here <https://eagerx.readthedocs.io/en/master/>`_.
+
+Installation
+============
+
+You can install the package using pip:
+
+.. code:: shell
+
+    pip3 install eagerx-reality
+
+.. note::
+    EAGERx depends on a minimal ROS installation. Fortunately, you **can** use eagerx anywhere as you would any python package,
+    so it does **not** impose a ROS package structure on your project.
 
 Cite EAGERx
 ===============
