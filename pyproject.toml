@@ -13,7 +13,7 @@ python = "^3.6.2"
 eagerx = "^0.1.10"
 
 [tool.poetry.dev-dependencies]
-black = "^22.1.0"
+black = "^22.3.0"
 pytest = "^5.2"
 pytest-cov = "^3.0.0"
 flake8 = "^4.0.1"
