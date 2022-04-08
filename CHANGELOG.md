@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.5 (2022-04-08)
+### Fix
+* Bump eagerx version to 0.1.14 ([`346b0c4`](https://github.com/eager-dev/eagerx_reality/commit/346b0c49274a9cc784cbe3f31faa0e1014da9c50))
+* Flake8 dependency ([`8d19733`](https://github.com/eager-dev/eagerx_reality/commit/8d197333db1c28b9f789e54eeda73db344060d85))
+
 ## v0.1.4 (2022-03-23)
 ### Fix
 * Api changes eagerx ([`e4a9a95`](https://github.com/eager-dev/eagerx_reality/commit/e4a9a95813ef644371cb8bb7075f9946ffa462a4))
