@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.6 (2022-04-26)
+### Fix
+* Bump eagerx, flake8-bugbear ([`688bf24`](https://github.com/eager-dev/eagerx_reality/commit/688bf24ca1cf8a026ed75cbd5d2742588ae67895))
+* Refactor `is_reactive` to `sync`. ([`8321c26`](https://github.com/eager-dev/eagerx_reality/commit/8321c264aa4805f75d837a9196cd0b484fb7669d))
+
 ## v0.1.5 (2022-04-08)
 ### Fix
 * Bump eagerx version to 0.1.14 ([`346b0c4`](https://github.com/eager-dev/eagerx_reality/commit/346b0c49274a9cc784cbe3f31faa0e1014da9c50))
