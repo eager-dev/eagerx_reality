@@ -23,15 +23,15 @@ NP = process.NEW_PROCESS
 ENV = process.ENVIRONMENT
 
 @pytest.mark.parametrize(
-    "eps, steps, is_reactive, p",
+    "eps, steps, sync, p",
     [(3, 3, False, ENV)],
 )
-def test_real_bridge(eps, steps, is_reactive, p):
+def test_real_bridge(eps, steps, sync, p):
     # Start roscore
     roscore = initialize("eagerx_core", anonymous=True, log_level=log.WARN)
 
     # Define unique name for test environment
-    name = f"{eps}_{steps}_{is_reactive}_{p}"
+    name = f"{eps}_{steps}_{sync}_{p}"
     bridge_p = p
     rate = 30
 
@@ -52,7 +52,7 @@ def test_real_bridge(eps, steps, is_reactive, p):
     graph.connect(source=dummy.sensors.dummy_output, observation="observation", window=1)
 
     # Define bridges
-    bridge = Bridge.make("RealBridge", rate=rate, is_reactive=is_reactive, process=bridge_p)
+    bridge = Bridge.make("RealBridge", rate=rate, sync=sync, process=bridge_p)
 
     # Define step function
     def step_fn(prev_obs, obs, action, steps):
