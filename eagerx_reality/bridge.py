@@ -22,7 +22,7 @@ class RealBridge(Bridge):
         spec: BridgeSpec,
         rate,
         process: Optional[int] = process.NEW_PROCESS,
-        is_reactive: Optional[bool] = False,
+        sync: Optional[bool] = False,
         log_level: Optional[int] = ERROR,
     ):
         """
@@ -31,7 +31,7 @@ class RealBridge(Bridge):
         :param spec: Not provided by the user.
         :param rate: Rate of the bridge
         :param process: {0: NEW_PROCESS, 1: ENVIRONMENT, 2: BRIDGE, 3: EXTERNAL}
-        :param is_reactive: Run reactive or async
+        :param sync: Run reactive or async
         :param log_level: {0: SILENT, 10: DEBUG, 20: INFO, 30: WARN, 40: ERROR, 50: FATAL}
         :return: BridgeSpec
         """
@@ -41,7 +41,7 @@ class RealBridge(Bridge):
         # Modify default bridge params
         spec.config.rate = rate
         spec.config.process = process
-        spec.config.is_reactive = is_reactive
+        spec.config.sync = sync
         spec.config.real_time_factor = 1
         spec.config.simulate_delays = False
         spec.config.log_level = log_level
