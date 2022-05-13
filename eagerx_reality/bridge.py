@@ -35,9 +35,6 @@ class RealBridge(Bridge):
         :param log_level: {0: SILENT, 10: DEBUG, 20: INFO, 30: WARN, 40: ERROR, 50: FATAL}
         :return: BridgeSpec
         """
-        # Performs all the steps to fill-in the params with registered info about all functions.
-        spec.initialize(RealBridge)
-
         # Modify default bridge params
         spec.config.rate = rate
         spec.config.process = process

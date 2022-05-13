@@ -49,9 +49,6 @@ class Dummy(Object):
     @register.spec(entity_id, Object)
     def spec(spec: ObjectSpec, name: str, sensors=None, states=None, rate=30):
         """Object spec of dummy object"""
-        # Performs all the steps to fill-in the params with registered info about all functions.
-        Dummy.initialize_spec(spec)
-
         # Modify default agnostic params
         # Only allow changes to the agnostic params (rates, windows, (space)converters, etc...
         spec.config.name = name

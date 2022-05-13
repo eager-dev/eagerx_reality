@@ -28,9 +28,6 @@ class CameraRender(EngineNode):
         camera_idx: int = 0,
     ):
         """CameraRender spec"""
-        # Performs all the steps to fill-in the params with registered info about all functions.
-        spec.initialize(CameraRender)
-
         # Modify default node params
         spec.config.name = name
         spec.config.rate = rate
