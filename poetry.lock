@@ -65,7 +65,7 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "catkin-pkg"
-version = "0.4.24"
+version = "0.5.0"
 description = "catkin package library"
 category = "main"
 optional = false
@@ -75,6 +75,9 @@ python-versions = "*"
 docutils = "*"
 pyparsing = "*"
 python-dateutil = "*"
+
+[package.extras]
+test = ["flake8", "flake8-blind-except", "flake8-builtins", "flake8-class-newline", "flake8-comprehensions", "flake8-deprecated", "flake8-docstrings", "flake8-import-order", "flake8-quotes", "pytest", "mock"]
 
 [[package]]
 name = "certifi"
@@ -187,7 +190,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "eagerx"
-version = "0.1.17"
+version = "0.1.23"
 description = "Engine Angostic Gym Environments for Robotics"
 category = "main"
 optional = false
@@ -201,6 +204,7 @@ networkx = ">=2.5.1,<3.0.0"
 opencv-python = ">=4.3.0.36,<5.0.0.0"
 psutil = ">=5.9.0,<6.0.0"
 pyglet = ">=1.5.21,<2.0.0"
+PyVirtualDisplay = ">=3.0,<4.0"
 PyYAML = ">=6.0,<7.0"
 rospkg = ">=1.3.0,<2.0.0"
 Rx = ">=3.2.0,<4.0.0"
@@ -551,7 +555,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "pyglet"
-version = "1.5.23"
+version = "1.5.24"
 description = "Cross-platform windowing and multimedia library"
 category = "main"
 optional = false
@@ -628,6 +632,14 @@ six = ">=1.5"
 name = "pytz"
 version = "2022.1"
 description = "World timezone definitions, modern and historical"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "pyvirtualdisplay"
+version = "3.0"
+description = "python wrapper for Xvfb, Xephyr and Xvnc"
 category = "main"
 optional = false
 python-versions = "*"
@@ -958,7 +970,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6.2"
-content-hash = "0431fe7b9b0ea4fe3f03f4c54b5d5799bd365d6f55d201d795e4ae90a57afeef"
+content-hash = "cd887c4ed82849870f249909653d185e6a85a042edcec8e1b18b982c22b9079d"
 
 [metadata.files]
 alabaster = [
@@ -1003,8 +1015,8 @@ black = [
     {file = "black-22.3.0.tar.gz", hash = "sha256:35020b8886c022ced9282b51b5a875b6d1ab0c387b31a065b84db7c33085ca79"},
 ]
 catkin-pkg = [
-    {file = "catkin_pkg-0.4.24-py3-none-any.whl", hash = "sha256:6ae0dddcde95689266e91dac13e1d8e9cdec4739bc7e2037b14cbcc1d7af96b2"},
-    {file = "catkin_pkg-0.4.24.tar.gz", hash = "sha256:f26d22cc5d8cb54f681f13fec4d06637b4983d493aa054f8e69ba888d632c6b4"},
+    {file = "catkin_pkg-0.5.0-py3-none-any.whl", hash = "sha256:7dabab73f77ef64ecb23a0e7dc55e1f9dc0bd9ca7aeb83c94647edb6ff626c74"},
+    {file = "catkin_pkg-0.5.0.tar.gz", hash = "sha256:0fcc81184ee58af059aed67926dad12d77bfe64eda94a9304305d65e7967a9a3"},
 ]
 certifi = [
     {file = "certifi-2021.10.8-py2.py3-none-any.whl", hash = "sha256:d62a0163eb4c2344ac042ab2bdf75399a71a2d8c7d47eac2e2ee91b9d6339569"},
@@ -1100,8 +1112,8 @@ docutils = [
     {file = "docutils-0.17.1.tar.gz", hash = "sha256:686577d2e4c32380bb50cbb22f575ed742d58168cee37e99117a854bcd88f125"},
 ]
 eagerx = [
-    {file = "eagerx-0.1.17-py3-none-any.whl", hash = "sha256:10614b4fecdb5d06cea9fdcc2007dd9a77ff06f7b820d2e5f6d38c76e6dc3507"},
-    {file = "eagerx-0.1.17.tar.gz", hash = "sha256:38d9eaaf0079948ce1ed09f8628c1b3947c23f2926d8f7616c40f42e1364b5d9"},
+    {file = "eagerx-0.1.23-py3-none-any.whl", hash = "sha256:da9d0c5d786704dddc235ec28cecc2c98a78d6e939947276dbecc0181acc3b73"},
+    {file = "eagerx-0.1.23.tar.gz", hash = "sha256:3e32c65f99eb53abc80b40541a38834625df3cbb330f6000792f2d2436f7f893"},
 ]
 flake8 = [
     {file = "flake8-3.9.2-py2.py3-none-any.whl", hash = "sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"},
@@ -1490,8 +1502,8 @@ pyflakes = [
     {file = "pyflakes-2.3.1.tar.gz", hash = "sha256:f5bc8ecabc05bb9d291eb5203d6810b49040f6ff446a756326104746cc00c1db"},
 ]
 pyglet = [
-    {file = "pyglet-1.5.23-py3-none-any.whl", hash = "sha256:086317c022612bf0aa28f32134a8cbe3d11de96787f5412d38d9c6abb6cfc771"},
-    {file = "pyglet-1.5.23.zip", hash = "sha256:dee920203cf306159c503babb62f38787268708977f5c945d28337594b797c46"},
+    {file = "pyglet-1.5.24-py3-none-any.whl", hash = "sha256:1268a604b2268419cad94e95e42711553463f602c101f2bd48eb6eacaf9c306c"},
+    {file = "pyglet-1.5.24.zip", hash = "sha256:5b4a4d5e5ad54946e31492eac67f7292e51a6577244641a277180f90a0192a8e"},
 ]
 pygments = [
     {file = "Pygments-2.12.0-py3-none-any.whl", hash = "sha256:dc9c10fb40944260f6ed4c688ece0cd2048414940f1cea51b8b226318411c519"},
@@ -1516,6 +1528,10 @@ python-dateutil = [
 pytz = [
     {file = "pytz-2022.1-py2.py3-none-any.whl", hash = "sha256:e68985985296d9a66a881eb3193b0906246245294a881e7c8afe623866ac6a5c"},
     {file = "pytz-2022.1.tar.gz", hash = "sha256:1e760e2fe6a8163bc0b3d9a19c4f84342afa0a2affebfaa84b01b978a02ecaa7"},
+]
+pyvirtualdisplay = [
+    {file = "PyVirtualDisplay-3.0-py3-none-any.whl", hash = "sha256:40d4b8dfe4b8de8552e28eb367647f311f88a130bf837fe910e7f180d5477f0e"},
+    {file = "PyVirtualDisplay-3.0.tar.gz", hash = "sha256:09755bc3ceb6eb725fb07eca5425f43f2358d3bf08e00d2a9b792a1aedd16159"},
 ]
 pywavelets = [
     {file = "PyWavelets-1.1.1-cp35-cp35m-macosx_10_6_intel.whl", hash = "sha256:35959c041ec014648575085a97b498eafbbaa824f86f6e4a59bfdef8a3fe6308"},
