@@ -2,6 +2,15 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.7 (2022-05-16)
+### Fix
+* Update dependencies ([`db640a8`](https://github.com/eager-dev/eagerx_reality/commit/db640a837e96324e4f09a6e35ec76951cc508cc2))
+* Refactor bridge to engine ([`8d9ec0f`](https://github.com/eager-dev/eagerx_reality/commit/8d9ec0f93d0c6f83ca45dc84b915b95b67d6ac80))
+* Refactor initialize_spec ([`d6164f8`](https://github.com/eager-dev/eagerx_reality/commit/d6164f8a6b420f30f50bbc84862c37687a7f337e))
+
+### Documentation
+* Update  bibtex typo ([`907d514`](https://github.com/eager-dev/eagerx_reality/commit/907d5141159c58b034cdb2adbb5a4a5222f7ed64))
+
 ## v0.1.6 (2022-04-26)
 ### Fix
 * Bump eagerx, flake8-bugbear ([`688bf24`](https://github.com/eager-dev/eagerx_reality/commit/688bf24ca1cf8a026ed75cbd5d2742588ae67895))
