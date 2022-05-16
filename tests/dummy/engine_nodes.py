@@ -19,9 +19,6 @@ class DummyOutput(EngineNode):
     @register.spec('DummyOutput', EngineNode)
     def spec(spec, name: str, rate: float, process: Optional[int] = process.NEW_PROCESS, color: Optional[str] = 'cyan'):
         """DummyOutput spec"""
-        # Performs all the steps to fill-in the params with registered info about all functions.
-        spec.initialize(DummyOutput)
-
         # Modify default node params
         spec.config.name = name
         spec.config.rate = rate
@@ -49,9 +46,6 @@ class DummyInput(EngineNode):
     @register.spec('DummyInput', EngineNode)
     def spec(spec, name: str, rate: float, process: Optional[int] = process.NEW_PROCESS, color: Optional[str] = 'green'):
         """DummyInput spec"""
-        # Performs all the steps to fill-in the params with registered info about all functions.
-        spec.initialize(DummyInput)
-
         # Modify default node params
         params = dict(name=name, rate=rate, process=process, color=color, inputs=['tick', 'dummy_input'], outputs=[])
         spec.config.update(params)

@@ -2,7 +2,7 @@
 name = "eagerx_reality"
 version = "0.1.6"
 license = "Apache2.0"
-description = "Simple bridge that can be used in reality together with several useful nodes."
+description = "Simple engine that can be used in reality together with several useful nodes."
 authors = ["Jelle Luijkx <j.d.luijkx@tudelft.nl>", "Bas van der Heijden <d.s.vanderheijden@tudelft.nl>"]
 homepage = "https://github.com/eager-dev/eagerx_reality"
 repository = "https://github.com/eager-dev/eagerx_reality"
@@ -10,7 +10,7 @@ documentation = "https://eagerx.readthedocs.io/en/master/"
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
-eagerx = "^0.1.17"
+eagerx = "^0.1.23"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"

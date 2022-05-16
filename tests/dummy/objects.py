@@ -2,7 +2,7 @@
 from std_msgs.msg import Float32MultiArray
 
 # EAGERx IMPORTS
-from eagerx_reality.bridge import RealBridge
+from eagerx_reality.engine import RealEngine
 from eagerx.core.entities import (
     Object,
     EngineNode,
@@ -49,9 +49,6 @@ class Dummy(Object):
     @register.spec(entity_id, Object)
     def spec(spec: ObjectSpec, name: str, sensors=None, states=None, rate=30):
         """Object spec of dummy object"""
-        # Performs all the steps to fill-in the params with registered info about all functions.
-        Dummy.initialize_spec(spec)
-
         # Modify default agnostic params
         # Only allow changes to the agnostic params (rates, windows, (space)converters, etc...
         spec.config.name = name
@@ -59,16 +56,16 @@ class Dummy(Object):
         spec.config.actuators = ["dummy_input"]
         spec.config.states = states if states else ["dummy_state"]
 
-        # Add bridge implementation
+        # Add engine implementation
         Dummy.agnostic(spec, rate)
 
     @staticmethod
-    @register.bridge(entity_id, RealBridge)  # This decorator pre-initializes bridge implementation with default object_params
-    def real_bridge(spec: ObjectSpec, graph: EngineGraph):
-        """Engine-specific implementation (RealBridge) of the object."""
+    @register.engine(entity_id, RealEngine)  # This decorator pre-initializes engine implementation with default object_params
+    def real_engine(spec: ObjectSpec, graph: EngineGraph):
+        """Engine-specific implementation (RealEngine) of the object."""
         # Couple engine states
         from tests.dummy.engine_states import DummyReset # noqa # pylint: disable=unused-import
-        spec.RealBridge.states.dummy_state = EngineState.make("DummyResetState", sleep_time=1.0, repeat=1)
+        spec.RealEngine.states.dummy_state = EngineState.make("DummyResetState", sleep_time=1.0, repeat=1)
 
         # Create sensor engine nodes
         # Rate=None, because we will connect them to sensors (thus uses the rate set in the agnostic specification)

@@ -11,34 +11,31 @@ from genpy.message import Message
 from eagerx.core.constants import process, ERROR
 import eagerx.core.register as register
 from eagerx.utils.utils import Msg
-from eagerx.core.entities import Bridge
-from eagerx.core.specs import BridgeSpec
+from eagerx.core.entities import Engine
+from eagerx.core.specs import EngineSpec
 
 
-class RealBridge(Bridge):
+class RealEngine(Engine):
     @staticmethod
-    @register.spec("RealBridge", Bridge)
+    @register.spec("RealEngine", Engine)
     def spec(
-        spec: BridgeSpec,
+        spec: EngineSpec,
         rate,
         process: Optional[int] = process.NEW_PROCESS,
         sync: Optional[bool] = False,
         log_level: Optional[int] = ERROR,
     ):
         """
-        Spec of the RealBridge
+        Spec of the RealEngine
 
         :param spec: Not provided by the user.
-        :param rate: Rate of the bridge
-        :param process: {0: NEW_PROCESS, 1: ENVIRONMENT, 2: BRIDGE, 3: EXTERNAL}
+        :param rate: Rate of the engine
+        :param process: {0: NEW_PROCESS, 1: ENVIRONMENT, 2: ENGINE, 3: EXTERNAL}
         :param sync: Run reactive or async
         :param log_level: {0: SILENT, 10: DEBUG, 20: INFO, 30: WARN, 40: ERROR, 50: FATAL}
-        :return: BridgeSpec
+        :return: EngineSpec
         """
-        # Performs all the steps to fill-in the params with registered info about all functions.
-        spec.initialize(RealBridge)
-
-        # Modify default bridge params
+        # Modify default engine params
         spec.config.rate = rate
         spec.config.process = process
         spec.config.sync = sync
@@ -50,8 +47,8 @@ class RealBridge(Bridge):
     def initialize(self):
         self.simulator = dict()
 
-    @register.bridge_config(driver_launch_file=None, launch_args=[])
-    def add_object(self, config, bridge_config, node_params, state_params):
+    @register.engine_config(driver_launch_file=None, launch_args=[])
+    def add_object(self, config, engine_config, node_params, state_params):
         # add object to simulator (we have a ref to the simulator with self.simulator)
         rospy.loginfo(f'Adding object "{config["name"]}" of type "{config["entity_id"]}" to the simulator.')
 

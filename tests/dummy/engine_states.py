@@ -7,8 +7,6 @@ class DummyReset(EngineState):
     @staticmethod
     @register.spec('DummyResetState', EngineState)
     def spec(spec, sleep_time: float = 1., repeat: int = 1):
-        spec.initialize(DummyReset)
-
         spec.config.sleep_time = sleep_time
         spec.config.repeat = repeat
 

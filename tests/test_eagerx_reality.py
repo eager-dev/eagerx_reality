@@ -1,5 +1,5 @@
 # ROS packages required
-from eagerx import Object, Bridge, Node, initialize, log, process
+from eagerx import Object, Engine, Node, initialize, log, process
 
 # Environment
 from eagerx.core.env import EagerxEnv
@@ -8,7 +8,7 @@ from eagerx.wrappers import Flatten
 
 # Implementation specific
 import eagerx.nodes  # Registers butterworth_filter # noqa # pylint: disable=unused-import
-import eagerx_reality  # Registers RealBridge # noqa # pylint: disable=unused-import
+import eagerx_reality  # Registers RealEngine # noqa # pylint: disable=unused-import
 
 # Other
 import numpy as np
@@ -26,13 +26,13 @@ ENV = process.ENVIRONMENT
     "eps, steps, sync, p",
     [(3, 3, False, ENV)],
 )
-def test_real_bridge(eps, steps, sync, p):
+def test_real_engine(eps, steps, sync, p):
     # Start roscore
     roscore = initialize("eagerx_core", anonymous=True, log_level=log.WARN)
 
     # Define unique name for test environment
     name = f"{eps}_{steps}_{sync}_{p}"
-    bridge_p = p
+    engine_p = p
     rate = 30
 
     # Initialize empty graph
@@ -51,8 +51,8 @@ def test_real_bridge(eps, steps, sync, p):
     graph.connect(action="action", target=dummy.actuators.dummy_input)
     graph.connect(source=dummy.sensors.dummy_output, observation="observation", window=1)
 
-    # Define bridges
-    bridge = Bridge.make("RealBridge", rate=rate, sync=sync, process=bridge_p)
+    # Define engines
+    engine = Engine.make("RealEngine", rate=rate, sync=sync, process=engine_p)
 
     # Define step function
     def step_fn(prev_obs, obs, action, steps):
@@ -68,7 +68,7 @@ def test_real_bridge(eps, steps, sync, p):
         return obs, -cost, done, info
 
     # Initialize Environment
-    env = Flatten(EagerxEnv(name=name, rate=rate, graph=graph, bridge=bridge, step_fn=step_fn))
+    env = Flatten(EagerxEnv(name=name, rate=rate, graph=graph, engine=engine, step_fn=step_fn))
 
     # First reset
     env.reset()
