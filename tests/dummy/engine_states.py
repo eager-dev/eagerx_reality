@@ -1,19 +1,21 @@
-import rospy
+from typing import Any
 from eagerx import EngineState
-import eagerx.core.register as register
+from eagerx.core.specs import EngineStateSpec, ObjectSpec
+import time
 
 
 class DummyReset(EngineState):
-    @staticmethod
-    @register.spec('DummyResetState', EngineState)
-    def spec(spec, sleep_time: float = 1., repeat: int = 1):
+    @classmethod
+    def make(cls, sleep_time: float = 1., repeat: int = 1) -> EngineStateSpec:
+        spec = cls.get_specification()
         spec.config.sleep_time = sleep_time
         spec.config.repeat = repeat
+        return spec
 
-    def initialize(self, sleep_time: float, repeat: int):
-        self.sleep_time = sleep_time
-        self.repeat = repeat
+    def initialize(self, spec: EngineStateSpec, object_spec: ObjectSpec, simulator: Any):
+        self.sleep_time = spec.config.sleep_time
+        self.repeat = spec.config.repeat
 
-    def reset(self, state, done):
+    def reset(self, state):
         for i in range(self.repeat):
-            rospy.sleep(self.sleep_time)
+            time.sleep(self.sleep_time)

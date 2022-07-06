@@ -1,26 +1,10 @@
-# ROS packages required
-from eagerx import Object, Engine, Node, initialize, log, process
-
-# Environment
-from eagerx.core.env import EagerxEnv
-from eagerx.core.graph import Graph
-from eagerx.wrappers import Flatten
-
-# Implementation specific
-import eagerx.nodes  # Registers butterworth_filter # noqa # pylint: disable=unused-import
-import eagerx_reality  # Registers RealEngine # noqa # pylint: disable=unused-import
-
-# Other
-import numpy as np
-import rospy
-
-# Import dummy object
-import tests.dummy.objects # noqa # pylint: disable=unused-import
+import eagerx
 
 import pytest
 
-NP = process.NEW_PROCESS
-ENV = process.ENVIRONMENT
+NP = eagerx.NEW_PROCESS
+ENV = eagerx.ENVIRONMENT
+
 
 @pytest.mark.parametrize(
     "eps, steps, sync, p",
@@ -28,7 +12,7 @@ ENV = process.ENVIRONMENT
 )
 def test_real_engine(eps, steps, sync, p):
     # Start roscore
-    roscore = initialize("eagerx_core", anonymous=True, log_level=log.WARN)
+    eagerx.set_log_level(eagerx.WARN)
 
     # Define unique name for test environment
     name = f"{eps}_{steps}_{sync}_{p}"
@@ -36,15 +20,11 @@ def test_real_engine(eps, steps, sync, p):
     rate = 30
 
     # Initialize empty graph
-    graph = Graph.create()
+    graph = eagerx.Graph.create()
 
     # Create dummy
-    dummy = Object.make(
-        "Eagerx_Real_Dummy",
-        "dummy",
-        sensors=["dummy_output"],
-        states=["dummy_state"],
-    )
+    from dummy.objects import Dummy
+    dummy = Dummy.make("dummy", sensors=["dummy_output"], states=["dummy_state"])
     graph.add(dummy)
 
     # Connect the nodes
@@ -52,23 +32,33 @@ def test_real_engine(eps, steps, sync, p):
     graph.connect(source=dummy.sensors.dummy_output, observation="observation", window=1)
 
     # Define engines
-    engine = Engine.make("RealEngine", rate=rate, sync=sync, process=engine_p)
+    from eagerx_reality.engine import RealEngine
+    engine = RealEngine.make(rate=rate, sync=sync, process=engine_p)
 
-    # Define step function
-    def step_fn(prev_obs, obs, action, steps):
-        # Calculate dummy reward
-        if len(obs["observation"][0]) == 2:
-            cost = np.sum(obs["observation"][0])
-        else:
-            cost = 0
-        # Determine done flag
-        done = steps > 500
-        # Set info:
-        info = dict()
-        return obs, -cost, done, info
+    # Define backend
+    from eagerx.backends.single_process import SingleProcess
+    backend = SingleProcess.make()
+
+    # Define environment
+    class TestEnv(eagerx.BaseEnv):
+        def __init__(self, name, rate, graph, engine, backend, force_start):
+            super().__init__(name, rate, graph, engine, backend=backend, force_start=force_start)
+
+        def step(self, action):
+            obs = self._step(action)
+            # Determine done flag
+            done = steps > 500
+            # Set info:
+            info = dict()
+            return obs, 0., done, info
+
+        def reset(self):
+            states = self.state_space.sample()
+            obs = self._reset(states)
+            return obs
 
     # Initialize Environment
-    env = Flatten(EagerxEnv(name=name, rate=rate, graph=graph, engine=engine, step_fn=step_fn))
+    env = TestEnv(name, rate, graph, engine, backend, force_start=True)
 
     # First reset
     env.reset()
@@ -80,6 +70,8 @@ def test_real_engine(eps, steps, sync, p):
         env.reset()
     print("\n[Finished]")
     env.shutdown()
-    if roscore:
-        roscore.shutdown()
     print("\n[Shutdown]")
+
+
+if __name__ == "__main__":
+    test_real_engine(3, 3, False, ENV)

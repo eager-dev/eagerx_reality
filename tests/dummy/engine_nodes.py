@@ -1,66 +1,61 @@
-from typing import Optional
+from typing import Any
 import numpy as np
-import rospy
-
-# IMPORT ROS
-from std_msgs.msg import UInt64, Float32MultiArray
+from gym.spaces import Box, Discrete
 
 # IMPORT EAGERX
+import eagerx
+from eagerx.core.specs import NodeSpec, ObjectSpec
 import eagerx.core.register as register
 from eagerx.utils.utils import Msg
-from eagerx import EngineNode
-from eagerx import process
 
 # random number generator
 from random import random
 
-class DummyOutput(EngineNode):
-    @staticmethod
-    @register.spec('DummyOutput', EngineNode)
-    def spec(spec, name: str, rate: float, process: Optional[int] = process.NEW_PROCESS, color: Optional[str] = 'cyan'):
+
+class DummyOutput(eagerx.EngineNode):
+    @classmethod
+    def make(cls, name: str, rate: float, process: int = eagerx.NEW_PROCESS, color: str = 'cyan') -> NodeSpec:
         """DummyOutput spec"""
-        # Modify default node params
-        spec.config.name = name
-        spec.config.rate = rate
-        spec.config.process = process
-        spec.config.color = color
-        spec.config.inputs = ["tick"]
-        spec.config.outputs = ["dummy_output"]
+        spec = cls.get_specification()
 
-    def initialize(self):
+        # Modify default node params
+        spec.config.update(name=name, rate=rate, process=process, color=color, inputs=["tick"], outputs=["dummy_output"])
+        return spec
+
+    def initialize(self, spec: NodeSpec, object_spec: ObjectSpec, simulator: Any):
         pass
 
     @register.states()
     def reset(self):
         pass
 
-    @register.inputs(tick=UInt64)
-    @register.outputs(dummy_output=Float32MultiArray)
-    def callback(self, t_n: float, tick: Optional[Msg] = None):
-        data = [random(), random()]
-        return dict(dummy_output=Float32MultiArray(data=data))
+    @register.inputs(tick=Discrete(9999))
+    @register.outputs(dummy_output=Box(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
+    def callback(self, t_n: float, tick: Msg):
+        data = np.array([random()], dtype="float32")
+        return dict(dummy_output=data)
 
 
-class DummyInput(EngineNode):
-    @staticmethod
-    @register.spec('DummyInput', EngineNode)
-    def spec(spec, name: str, rate: float, process: Optional[int] = process.NEW_PROCESS, color: Optional[str] = 'green'):
+class DummyInput(eagerx.EngineNode):
+    @classmethod
+    def make(cls, name: str, rate: float, process: int = eagerx.NEW_PROCESS, color: str = 'green') -> NodeSpec:
         """DummyInput spec"""
+        spec = cls.get_specification()
+
         # Modify default node params
-        params = dict(name=name, rate=rate, process=process, color=color, inputs=['tick', 'dummy_input'], outputs=[])
-        spec.config.update(params)
+        spec.config.update(name=name, rate=rate, process=process, color=color, inputs=['tick', 'dummy_input'], outputs=[])
+        return spec
 
-        # Set component parameter
-        spec.inputs.dummy_input.window = 1
-
-    def initialize(self):
+    def initialize(self, spec: NodeSpec, object_spec: ObjectSpec, simulator: Any):
         pass
 
     @register.states()
     def reset(self):
         pass
 
-    @register.inputs(tick=UInt64, dummy_input=Float32MultiArray)
-    def callback(self, t_n: float, tick: Optional[Msg] = None,
-                 dummy_input: Optional[Msg] = None):
-        pass
+    @register.inputs(tick=Discrete(9999),
+                     dummy_input=Box(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
+    @register.outputs(dummy_output=Box(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
+    def callback(self, t_n: float, tick: Msg, dummy_input: Msg):
+        data = np.array([random()], dtype="float32")
+        return dict(dummy_output=data)
