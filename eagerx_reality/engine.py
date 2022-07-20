@@ -1,70 +1,60 @@
 # OTHER
-from typing import Optional, Dict, Union, List
-
-
-# ROS IMPORTS
-import rospy
-from std_msgs.msg import UInt64
-from genpy.message import Message
+from typing import Optional
 
 # RX IMPORTS
-from eagerx.core.constants import process, ERROR
+import eagerx
 import eagerx.core.register as register
-from eagerx.utils.utils import Msg
 from eagerx.core.entities import Engine
-from eagerx.core.specs import EngineSpec
+from eagerx.core.specs import EngineSpec, ObjectSpec
 
 
 class RealEngine(Engine):
-    @staticmethod
-    @register.spec("RealEngine", Engine)
-    def spec(
-        spec: EngineSpec,
+    @classmethod
+    def make(
+        cls,
         rate,
-        process: Optional[int] = process.NEW_PROCESS,
+        process: Optional[int] = eagerx.NEW_PROCESS,
         sync: Optional[bool] = False,
-        log_level: Optional[int] = ERROR,
-    ):
+        log_level: Optional[int] = eagerx.ERROR,
+    ) -> EngineSpec:
         """
         Spec of the RealEngine
 
-        :param spec: Not provided by the user.
         :param rate: Rate of the engine
         :param process: {0: NEW_PROCESS, 1: ENVIRONMENT, 2: ENGINE, 3: EXTERNAL}
-        :param sync: Run reactive or async
+        :param sync: A boolean flag to set the mode of synchronization.
         :param log_level: {0: SILENT, 10: DEBUG, 20: INFO, 30: WARN, 40: ERROR, 50: FATAL}
         :return: EngineSpec
         """
-        # Modify default engine params
-        spec.config.rate = rate
-        spec.config.process = process
-        spec.config.sync = sync
-        spec.config.real_time_factor = 1
-        spec.config.simulate_delays = False
-        spec.config.log_level = log_level
-        spec.config.color = "magenta"
+        spec = cls.get_specification()
 
-    def initialize(self):
+        # Modify default engine params
+        spec.config.update(rate=rate, process=process, sync=sync, real_time_factor=1, simulate_delays=False)
+        spec.config.update(log_level=log_level, color="magenta")
+        return spec
+
+    def initialize(self, spec: EngineSpec):
         self.simulator = dict()
 
-    @register.engine_config(driver_launch_file=None, launch_args=[])
-    def add_object(self, config, engine_config, node_params, state_params):
+    def add_object(self, spec: ObjectSpec):
+        object_name = spec.config.name
+        entity_id = spec.config.entity_id
+
         # add object to simulator (we have a ref to the simulator with self.simulator)
-        rospy.loginfo(f'Adding object "{config["name"]}" of type "{config["entity_id"]}" to the simulator.')
+        self.backend.loginfo(f'Adding object "{object_name}" of type "{entity_id}" to the simulator.')
 
         # Extract relevant agnostic_params
-        obj_name = config["name"]
+        obj_name = object_name
 
         # Create new env, and add to simulator
         self.simulator[obj_name] = dict(state=None, input=None)
 
-    def pre_reset(self, **kwargs: Optional[Msg]):
+    def pre_reset(self):
         pass
 
     @register.states()
-    def reset(self, **kwargs: Optional[Msg]):
+    def reset(self):
         pass
 
-    @register.outputs(tick=UInt64)
-    def callback(self, t_n: float, **kwargs: Dict[str, Union[List[Message], float, int]]):
+    def callback(self, t_n: float):
         pass
