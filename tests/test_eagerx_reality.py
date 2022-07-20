@@ -22,7 +22,7 @@ def test_real_engine(eps, steps, sync, p):
     # Initialize empty graph
     graph = eagerx.Graph.create()
 
-    # Create dummy
+    # Create dummy 
     try:
         from tests.dummy.objects import Dummy
     except ImportError:
