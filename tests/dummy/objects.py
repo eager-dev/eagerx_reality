@@ -1,5 +1,5 @@
-from gym.spaces import Box
 import numpy as np
+from eagerx.core.space import Space
 from eagerx.core.entities import Object
 from eagerx_reality.engine import RealEngine
 from eagerx.core.specs import ObjectSpec
@@ -9,9 +9,9 @@ import eagerx.core.register as register
 
 class Dummy(Object):
     @classmethod
-    @register.sensors(dummy_output=Box(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
-    @register.actuators(dummy_input=Box(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
-    @register.engine_states(dummy_state=Box(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
+    @register.sensors(dummy_output=Space(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
+    @register.actuators(dummy_input=Space(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
+    @register.engine_states(dummy_state=Space(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
     def make(cls, name: str, sensors=None, states=None, rate=30) -> ObjectSpec:
         """Object spec of dummy object"""
         spec = cls.get_specification()

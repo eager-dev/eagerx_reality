@@ -23,7 +23,13 @@ def test_real_engine(eps, steps, sync, p):
     graph = eagerx.Graph.create()
 
     # Create dummy
-    from dummy.objects import Dummy
+    try:
+        from tests.dummy.objects import Dummy
+    except ImportError:
+        try:
+            from .dummy.objects import Dummy
+        except ImportError:
+            from dummy.objects import Dummy
     dummy = Dummy.make("dummy", sensors=["dummy_output"], states=["dummy_state"])
     graph.add(dummy)
 
