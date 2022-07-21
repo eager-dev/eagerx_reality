@@ -1,11 +1,11 @@
 from typing import Optional, List, Any
 import numpy as np
-from gym.spaces import Box, Discrete
 import cv2
-import skimage.transform
+import PIL
 
 # IMPORT EAGERX
 import eagerx
+from eagerx import Space
 import eagerx.core.register as register
 from eagerx.utils.utils import Msg
 from eagerx.core.entities import EngineNode
@@ -35,7 +35,7 @@ class CameraRender(EngineNode):
         spec.config.camera_idx = camera_idx
 
         # Set image space
-        spec.outputs.image.space = Box(low=0, high=255, shape=(spec.config.shape[0], spec.config.shape[1], 3), dtype="uint8")
+        spec.outputs.image.space.update(low=0, high=255, shape=[spec.config.shape[0], spec.config.shape[1], 3])
         return spec
 
     def initialize(self, spec: NodeSpec, object_spec: ObjectSpec, simulator: Any):
@@ -50,20 +50,19 @@ class CameraRender(EngineNode):
         # This sensor is stateless (in contrast to e.g. a Kalman filter).
         pass
 
-    @register.inputs(tick=Discrete(99999))  # Dummy, because a node must have at least one input.
-    @register.outputs(image=None)
+    @register.inputs(tick=Space(shape=(), dtype="int64"))  # Dummy, because a node must have at least one input.
+    @register.outputs(image=Space(dtype="uint8"))
     def callback(self, t_n: float, tick: Optional[Msg] = None):
         if self.render_toggle:
             self.cam: cv2.VideoCapture
             ret, cv_img = self.cam.read()
             if ret:
-                kwargs = dict(
-                    output_shape=(self.height, self.width),
-                    mode="edge",
-                    order=1,
-                    preserve_range=True,
-                )
-                img = skimage.transform.resize(cv_img, **kwargs).astype("uint8")
+                if cv_img.shape[:2] != (self.height, self.width):
+                    img_PIL = PIL.Image.fromarray(cv_img).convert("RGB")
+                    img_PIL = img_PIL.resize((self.height, self.width), PIL.Image.ANTIALIAS)
+                    img = np.array(img_PIL).astype("uint8")
+                else:
+                    img = cv_img.astype("uint8")
             else:
                 img = np.zeros((self.height, self.width, 3), dtype="uint8")
         else:
