@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "eagerx_reality"
-version = "0.1.9"
+version = "0.1.10"
 license = "Apache2.0"
 description = "Simple engine that can be used in reality together with several useful nodes."
 authors = ["Jelle Luijkx <j.d.luijkx@tudelft.nl>", "Bas van der Heijden <d.s.vanderheijden@tudelft.nl>"]
@@ -32,4 +32,4 @@ branch = "master"
 upload_to_pypi = true
 upload_to_release = true
 build_command = "pip install poetry && poetry build"
-version_source = "tag"
+version_source = "commit"
