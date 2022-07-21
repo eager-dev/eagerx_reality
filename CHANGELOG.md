@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.11 (2022-07-21)
+
+
 ## v0.1.7 (2022-05-16)
 ### Fix
 * Update dependencies ([`db640a8`](https://github.com/eager-dev/eagerx_reality/commit/db640a837e96324e4f09a6e35ec76951cc508cc2))
