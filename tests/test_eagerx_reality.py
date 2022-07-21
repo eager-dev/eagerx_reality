@@ -11,7 +11,7 @@ ENV = eagerx.ENVIRONMENT
     [(3, 3, False, ENV)],
 )
 def test_real_engine(eps, steps, sync, p):
-    # Start roscore
+    # Start
     eagerx.set_log_level(eagerx.WARN)
 
     # Define unique name for test environment
