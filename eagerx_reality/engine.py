@@ -47,7 +47,7 @@ class RealEngine(Engine):
         obj_name = object_name
 
         # Create new env, and add to simulator
-        self.simulator[obj_name] = dict(state=None, input=None)
+        self.simulator[obj_name] = dict()
 
     def pre_reset(self):
         pass
