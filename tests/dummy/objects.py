@@ -31,19 +31,30 @@ class Dummy(Object):
     @register.engine(RealEngine)  # This decorator pre-initializes engine implementation with default object_params
     def real_engine(spec: ObjectSpec, graph: EngineGraph):
         """Engine-specific implementation (RealEngine) of the object."""
+        try:
+            from tests.dummy.engine_states import DummyReset
+            from tests.dummy.engine_nodes import DummyOutput
+            from tests.dummy.engine_nodes import DummyInput
+        except ImportError:
+            try:
+                from .dummy.engine_states import DummyReset
+                from .dummy.engine_nodes import DummyOutput
+                from .dummy.engine_nodes import DummyInput
+            except ImportError:
+                from dummy.engine_states import DummyReset
+                from dummy.engine_nodes import DummyOutput
+                from dummy.engine_nodes import DummyInput
+
         # Couple engine states
-        from tests.dummy.engine_states import DummyReset
         spec.engine.states.dummy_state = DummyReset.make(sleep_time=1.0, repeat=1)
 
         # Create sensor engine nodes
         # Rate=None, because we will connect them to sensors (thus uses the rate set in the agnostic specification)
-        from tests.dummy.engine_nodes import DummyOutput
         obs = DummyOutput.make("dummy_output", rate=spec.sensors.dummy_output.rate, process=0)
 
         # Create actuator engine nodes
         # Rate=None, because we will connect it to an actuator (thus uses the rate set in the agnostic specification)
-        from tests.dummy.engine_nodes import DummyInput
-        action = DummyInput.make("dummy_input", rate=spec.actuators.dummy_input.rate, process=0)
+        action = DummyInput.make("dummyy_input", rate=spec.actuators.dummy_input.rate, process=0)
 
         # Connect all engine nodes
         graph.add([obs, action])

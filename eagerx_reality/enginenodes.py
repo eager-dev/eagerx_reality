@@ -9,7 +9,7 @@ from eagerx import Space
 import eagerx.core.register as register
 from eagerx.utils.utils import Msg
 from eagerx.core.entities import EngineNode
-from eagerx.core.specs import NodeSpec, ObjectSpec
+from eagerx.core.specs import NodeSpec
 
 
 class CameraRender(EngineNode):
@@ -22,7 +22,7 @@ class CameraRender(EngineNode):
         color: str = "cyan",
         shape: Optional[List[int]] = None,
         camera_idx: int = 0,
-        always_render: bool = False
+        always_render: bool = False,
     ) -> NodeSpec:
         """CameraRender spec"""
         spec = cls.get_specification()
@@ -40,7 +40,7 @@ class CameraRender(EngineNode):
         spec.outputs.image.space.update(low=0, high=255, shape=[spec.config.shape[0], spec.config.shape[1], 3])
         return spec
 
-    def initialize(self, spec: NodeSpec, object_spec: ObjectSpec, simulator: Any):
+    def initialize(self, spec: NodeSpec, simulator: Any):
         self.always_render = spec.config.always_render
         self.cam = None
         self.height, self.width = spec.config.shape

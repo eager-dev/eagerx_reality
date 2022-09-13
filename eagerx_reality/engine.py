@@ -5,7 +5,7 @@ from typing import Optional
 import eagerx
 import eagerx.core.register as register
 from eagerx.core.entities import Engine
-from eagerx.core.specs import EngineSpec, ObjectSpec
+from eagerx.core.specs import EngineSpec
 
 
 class RealEngine(Engine):
@@ -34,20 +34,14 @@ class RealEngine(Engine):
         return spec
 
     def initialize(self, spec: EngineSpec):
-        self.simulator = dict()
+        pass
 
-    def add_object(self, spec: ObjectSpec):
-        object_name = spec.config.name
-        entity_id = spec.config.entity_id
-
+    def add_object(self, name: str):
         # add object to simulator (we have a ref to the simulator with self.simulator)
-        self.backend.loginfo(f'Adding object "{object_name}" of type "{entity_id}" to the simulator.')
+        self.backend.loginfo(f'Adding object "{name}" to the simulator.')
 
-        # Extract relevant agnostic_params
-        obj_name = object_name
-
-        # Create new env, and add to simulator
-        self.simulator[obj_name] = dict()
+        # Nothing to be added to the simulator
+        self.simulator[name].update()
 
     def pre_reset(self):
         pass
