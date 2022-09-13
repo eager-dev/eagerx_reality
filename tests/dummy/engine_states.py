@@ -12,7 +12,7 @@ class DummyReset(EngineState):
         spec.config.repeat = repeat
         return spec
 
-    def initialize(self, spec: EngineStateSpec, object_spec: ObjectSpec, simulator: Any):
+    def initialize(self, spec: EngineStateSpec, simulator: Any):
         self.sleep_time = spec.config.sleep_time
         self.repeat = spec.config.repeat
 
