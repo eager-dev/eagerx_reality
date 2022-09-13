@@ -34,7 +34,7 @@ def test_real_engine(eps, steps, sync, p):
     graph.add(dummy)
 
     # Connect the nodes
-    graph.connect(action="action", target=dummy.actuators.dummy_input)
+    graph.connect(action="action", target=dummy.actuators.dummyy_input)
     graph.connect(source=dummy.sensors.dummy_output, observation="observation", window=1)
 
     # Define engines

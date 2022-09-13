@@ -3,7 +3,7 @@ import numpy as np
 
 # IMPORT EAGERX
 import eagerx
-from eagerx.core.specs import NodeSpec, ObjectSpec
+from eagerx.core.specs import NodeSpec
 import eagerx.core.register as register
 from eagerx.utils.utils import Msg
 
@@ -21,7 +21,7 @@ class DummyOutput(eagerx.EngineNode):
         spec.config.update(name=name, rate=rate, process=process, color=color, inputs=["tick"], outputs=["dummy_output"])
         return spec
 
-    def initialize(self, spec: NodeSpec, object_spec: ObjectSpec, simulator: Any):
+    def initialize(self, spec: NodeSpec, simulator: Any):
         pass
 
     @register.states()
@@ -42,19 +42,18 @@ class DummyInput(eagerx.EngineNode):
         spec = cls.get_specification()
 
         # Modify default node params
-        spec.config.update(name=name, rate=rate, process=process, color=color, inputs=['tick', 'dummy_input'], outputs=[])
+        spec.config.update(name=name, rate=rate, process=process, color=color, inputs=['dummy_input'], outputs=[])
         return spec
 
-    def initialize(self, spec: NodeSpec, object_spec: ObjectSpec, simulator: Any):
+    def initialize(self, spec: NodeSpec, simulator: Any):
         pass
 
     @register.states()
     def reset(self):
         pass
 
-    @register.inputs(tick=eagerx.Space(shape=(), dtype="int64"),
-                     dummy_input=eagerx.Space(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
-    @register.outputs(dummy_output=eagerx.Space(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
-    def callback(self, t_n: float, tick: Msg, dummy_input: Msg):
+    @register.inputs(dummy_input=eagerx.Space(low=np.array([-1], dtype="float32"), high=np.array([1], dtype="float32")))
+    @register.outputs()
+    def callback(self, t_n: float, dummy_input: Msg):
         data = np.array([random()], dtype="float32")
-        return dict(dummy_output=data)
+        return dict()
