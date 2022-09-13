@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.12 (2022-09-13)
+### Fix
+* Graph refactor and render node update ([#31](https://github.com/eager-dev/eagerx_reality/issues/31)) ([`7d2e613`](https://github.com/eager-dev/eagerx_reality/commit/7d2e6133948829866999a853d33c223efe958cc0))
+
 ## v0.1.11 (2022-07-21)
 
 
