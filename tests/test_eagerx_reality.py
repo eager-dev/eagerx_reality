@@ -47,21 +47,26 @@ def test_real_engine(eps, steps, sync, p):
 
     # Define environment
     class TestEnv(eagerx.BaseEnv):
-        def __init__(self, name, rate, graph, engine, backend, force_start):
-            super().__init__(name, rate, graph, engine, backend=backend, force_start=force_start)
+        def __init__(self, name, rate, graph, engine, backend, force_start, render_mode=None):
+            super().__init__(name, rate, graph, engine, backend=backend, force_start=force_start, render_mode=render_mode)
 
         def step(self, action):
             obs = self._step(action)
             # Determine done flag
             done = steps > 500
+            truncated = steps > 500
             # Set info:
             info = dict()
-            return obs, 0., done, info
+            if self.render_mode == "human":
+                self.render()
+            return obs, 0., truncated, done, info
 
-        def reset(self):
+        def reset(self, seed=None, options=None):
             states = self.state_space.sample()
             obs = self._reset(states)
-            return obs
+            if self.render_mode == "human":
+                self.render()
+            return obs, {}
 
     # Initialize Environment
     env = TestEnv(name, rate, graph, engine, backend, force_start=True)
