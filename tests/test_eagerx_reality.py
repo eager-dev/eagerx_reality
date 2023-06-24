@@ -53,13 +53,13 @@ def test_real_engine(eps, steps, sync, p):
         def step(self, action):
             obs = self._step(action)
             # Determine done flag
-            done = steps > 500
+            terminated = False
             truncated = steps > 500
             # Set info:
             info = dict()
             if self.render_mode == "human":
                 self.render()
-            return obs, 0., truncated, done, info
+            return obs, 0., terminated, truncated, info
 
         def reset(self, seed=None, options=None):
             states = self.state_space.sample()
