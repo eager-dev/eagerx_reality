@@ -355,13 +355,13 @@ files = [
 
 [[package]]
 name = "eagerx"
-version = "0.1.36"
+version = "0.1.38"
 description = "Engine Angostic Graph Environments for Robotics"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "eagerx-0.1.36-py3-none-any.whl", hash = "sha256:ff9ac905f45f147ca2d4da13d9121c4286b3630b1c111ac7d03a4eb7334d056c"},
-    {file = "eagerx-0.1.36.tar.gz", hash = "sha256:aeef6a4caa10914dc294262fed36a762c3f62b42c8aed0e4314a6a96be03b655"},
+    {file = "eagerx-0.1.38-py3-none-any.whl", hash = "sha256:e50638d7b374e021383ac7044eb1543abf0dc10cd8ca6053fd82c2e16c8e079d"},
+    {file = "eagerx-0.1.38.tar.gz", hash = "sha256:a5927a12d8526b32eed3480c3d5068e739909a03e07d2163fc406a83ea308a6f"},
 ]
 
 [package.dependencies]
