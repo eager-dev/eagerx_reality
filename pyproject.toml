@@ -14,7 +14,7 @@ eagerx = "^0.1.36"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
-pytest = "^7.0"
+pytest = "^7.4"
 pytest-cov = "^3.0.0"
 flake8= ">=3"
 flake8-bugbear = "^22.3.23"
